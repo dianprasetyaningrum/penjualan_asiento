@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="172b40c3-58d9-4e58-8222-26bbb846cda5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="bln" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="thn" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     detail_penjualan.`no_jual` AS detail_penjualan_no_jual,
+     detail_penjualan.`kode_barang` AS detail_penjualan_kode_barang,
+     detail_penjualan.`qty_jual` AS detail_penjualan_qty_jual,
+     detail_penjualan.`sub_jual` AS detail_penjualan_sub_jual,
+     barang.`kode_barang` AS barang_kode_barang,
+     barang.`nama_barang` AS barang_nama_barang,
+     barang.`harga` AS barang_harga,
+     barang.`stok` AS barang_stok,
+     penjualan.`no_jual` AS penjualan_no_jual,
+     penjualan.`tgl_jual` AS penjualan_tgl_jual,
+     penjualan.`no_pemesanan` AS penjualan_no_pemesanan,
+     penjualan.`total_jual` AS penjualan_total_jual,
+     penjualan.`no_faktur` AS penjualan_no_faktur,
+     date_format(penjualan.`tgl_jual`,'%M') AS bulan
+FROM
+     `detail_penjualan` detail_penjualan INNER JOIN `penjualan` penjualan ON detail_penjualan.`no_jual` = penjualan.`no_jual`
+     INNER JOIN `barang` barang ON detail_penjualan.`kode_barang` = barang.`kode_barang`
+WHERE
+month(tgl_jual)=$P{bln} and year(tgl_jual)=$P{thn}]]>
+	</queryString>
+	<field name="detail_penjualan_no_jual" class="java.lang.String"/>
+	<field name="detail_penjualan_kode_barang" class="java.lang.String"/>
+	<field name="detail_penjualan_qty_jual" class="java.lang.Integer"/>
+	<field name="detail_penjualan_sub_jual" class="java.lang.Integer"/>
+	<field name="barang_kode_barang" class="java.lang.String"/>
+	<field name="barang_nama_barang" class="java.lang.String"/>
+	<field name="barang_harga" class="java.lang.Integer"/>
+	<field name="barang_stok" class="java.lang.Integer"/>
+	<field name="penjualan_no_jual" class="java.lang.String"/>
+	<field name="penjualan_tgl_jual" class="java.sql.Date"/>
+	<field name="penjualan_no_pemesanan" class="java.lang.String"/>
+	<field name="penjualan_total_jual" class="java.lang.Integer"/>
+	<field name="penjualan_no_faktur" class="java.lang.String"/>
+	<field name="bulan" class="java.lang.String"/>
+	<variable name="detail_penjualan_qty_jual_1" class="java.lang.Integer" resetType="Group" resetGroup="penjualan_no_jual" calculation="Sum">
+		<variableExpression><![CDATA[$F{detail_penjualan_qty_jual}]]></variableExpression>
+	</variable>
+	<variable name="detail_penjualan_sub_jual_1" class="java.lang.Integer" resetType="Group" resetGroup="penjualan_no_jual" calculation="Sum">
+		<variableExpression><![CDATA[$F{detail_penjualan_sub_jual}]]></variableExpression>
+	</variable>
+	<group name="penjualan_no_jual">
+		<groupExpression><![CDATA[$F{penjualan_no_jual}]]></groupExpression>
+		<groupHeader>
+			<band height="192">
+				<textField>
+					<reportElement x="115" y="26" width="165" height="20" uuid="42307a09-9475-4ae8-844e-dfe1072c8032"/>
+					<textFieldExpression><![CDATA[$F{penjualan_no_jual}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="115" y="59" width="146" height="20" uuid="86c21e59-73ed-424d-865f-6e199a11ea6a"/>
+					<textFieldExpression><![CDATA[$F{penjualan_no_faktur}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="115" y="127" width="146" height="20" uuid="2525b869-1240-4527-a73b-51575e6cd68a"/>
+					<textFieldExpression><![CDATA[$F{penjualan_no_pemesanan}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="1" y="27" width="100" height="20" uuid="0f2abdda-b869-4103-880a-c28c57f5905a"/>
+					<text><![CDATA[No Penjualan]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="59" width="100" height="20" uuid="bf9256d7-5a3a-4bc6-8437-b1ca9e0307bb"/>
+					<text><![CDATA[No Faktur]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="115" y="92" width="146" height="20" uuid="c2c2f438-c21d-45ef-ab47-4914d040108e"/>
+					<textFieldExpression><![CDATA[$F{penjualan_tgl_jual}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="92" width="100" height="20" uuid="321158a7-c9c5-4829-9d1a-aae5f416ad6f"/>
+					<text><![CDATA[Tanggal Jual]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="127" width="100" height="20" uuid="978b0170-b711-4cf0-9f47-177c4df9fc18"/>
+					<text><![CDATA[Nomor Pesan]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="172" width="100" height="20" uuid="2c5b0f1b-d39f-418f-9458-358e236390f4"/>
+					<text><![CDATA[Kode Barang]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="180" y="172" width="100" height="20" uuid="66cafe05-4dce-4ac2-95c2-8ef2cf800ddb"/>
+					<text><![CDATA[Nama Barang]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="322" y="172" width="100" height="20" uuid="abc10df1-574f-471c-9ce8-c5059946d15c"/>
+					<text><![CDATA[Qty]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="486" y="172" width="100" height="20" uuid="835afbf9-0ebb-4fde-b443-2cc6a6ddda4d"/>
+					<text><![CDATA[Subtotal]]></text>
+				</staticText>
+				<frame>
+					<reportElement mode="Opaque" x="0" y="0" width="721" height="24" forecolor="#B89F7D" backcolor="#000000" uuid="497531fa-c56f-4134-8f56-2e79ceb1ecac"/>
+				</frame>
+				<rectangle>
+					<reportElement x="725" y="0" width="77" height="24" backcolor="#666666" uuid="9dfa6f6b-312a-4883-82dc-4c5f9336fdd9"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="110">
+				<staticText>
+					<reportElement x="180" y="0" width="100" height="20" uuid="47964da1-0177-4342-aefc-6f18e9aea3f7"/>
+					<text><![CDATA[Total Item]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="180" y="31" width="100" height="20" uuid="07e92462-f49f-4f83-98b9-47c60a1b0a00"/>
+					<text><![CDATA[Grand Total]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="322" y="0" width="158" height="20" uuid="8c6361ee-ca7e-4f0c-9052-14f9d9137ff1"/>
+					<textFieldExpression><![CDATA[$V{detail_penjualan_qty_jual_1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="486" y="31" width="165" height="20" uuid="de623b82-cd78-4a23-b91f-edc31a067960"/>
+					<textFieldExpression><![CDATA[$V{detail_penjualan_sub_jual_1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="102" splitType="Stretch">
+			<image>
+				<reportElement x="725" y="0" width="77" height="102" uuid="8704f386-d4a2-4a85-9a18-2e06fd81c7de"/>
+				<imageExpression><![CDATA["cherry.jpg"]]></imageExpression>
+			</image>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="721" height="66" backcolor="#000000" uuid="d4aa807f-c447-4260-938a-16190eb96c00"/>
+				<staticText>
+					<reportElement style="Title" x="0" y="0" width="458" height="66" uuid="e3fb12a2-7e99-40ce-bdb5-d4df36de42da"/>
+					<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+					<textElement verticalAlignment="Bottom">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[Laporan Penjualan]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="70" width="721" height="32" forecolor="#000000" backcolor="#CC0000" uuid="591226f6-4ece-4d51-86a8-1044dc742547"/>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="553" y="12" width="144" height="20" forecolor="#FFFFFF" uuid="7df5cbd4-2dbd-42bd-91cb-9855e7c0052d"/>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="29" splitType="Stretch">
+			<textField>
+				<reportElement x="115" y="5" width="100" height="20" uuid="2f4d8b23-5a0a-4632-b86f-2b76579b418a"/>
+				<textFieldExpression><![CDATA[$F{bulan}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="5" width="100" height="20" uuid="109e0397-db29-424d-be85-7ff2ae4ddc76"/>
+				<text><![CDATA[Bulan]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="345" y="4" width="100" height="20" uuid="e302dae9-158f-4393-a81a-64bbe02cc8cd"/>
+				<textFieldExpression><![CDATA[$P{thn}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="245" y="5" width="100" height="20" uuid="120b7b48-4415-414e-b7ce-388f7dc2140a"/>
+				<text><![CDATA[Tahun]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="32" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="797" height="18" uuid="33c440e2-32a4-4069-8ff4-c0b3df55f7a2"/>
+			</frame>
+			<textField>
+				<reportElement x="2" y="0" width="171" height="20" uuid="28ef8db8-1317-465b-99da-dfc66f3d1942"/>
+				<textFieldExpression><![CDATA[$F{detail_penjualan_kode_barang}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="0" width="127" height="20" uuid="20a67cd4-9b04-476b-8de7-3b2611b089db"/>
+				<textFieldExpression><![CDATA[$F{barang_nama_barang}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="322" y="0" width="152" height="20" uuid="fceb4e10-83f4-4858-aa5a-1918fc3e2acb"/>
+				<textFieldExpression><![CDATA[$F{detail_penjualan_qty_jual}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="486" y="0" width="165" height="20" uuid="3657d95d-faf0-4616-9ef5-299532dd74bd"/>
+				<textFieldExpression><![CDATA[$F{detail_penjualan_sub_jual}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="eac28155-c5f7-4475-9090-ce624fa3e31c"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="25" forecolor="#D0B48E" backcolor="#000000" uuid="4cd6cd74-bc23-4558-96b5-48d4814a49fb"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="757" y="3" width="40" height="20" forecolor="#FFFFFF" uuid="97dc59f3-1ca0-4cbe-a64b-939680d7f991"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="677" y="3" width="80" height="20" forecolor="#FFFFFF" uuid="8d5cdc1f-0be5-4299-b6a7-73b7cf3628bb"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

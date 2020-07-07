@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d9a2417c-3be6-4c83-bc10-0c042568887d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="117"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="bln" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="thn" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     detail_retur.`no_retur` AS detail_retur_no_retur,
+     detail_retur.`kode_barang` AS detail_retur_kode_barang,
+     detail_retur.`qty_retur` AS detail_retur_qty_retur,
+     detail_retur.`sub_retur` AS detail_retur_sub_retur,
+     barang.`kode_barang` AS barang_kode_barang,
+     barang.`nama_barang` AS barang_nama_barang,
+     barang.`harga` AS barang_harga,
+     barang.`stok` AS barang_stok,
+     retur_jual.`no_retur` AS retur_jual_no_retur,
+     retur_jual.`tgl_retur` AS retur_jual_tgl_retur,
+     retur_jual.`total_retur` AS retur_jual_total_retur,
+     retur_jual.`id_customer` AS retur_jual_id_customer,
+     date_format(retur_jual.`tgl_retur`,'%M') AS bulan
+FROM
+     `detail_retur` detail_retur INNER JOIN `retur_jual` retur_jual ON detail_retur.`no_retur` = retur_jual.`no_retur`
+     INNER JOIN `barang` barang ON detail_retur.`kode_barang` = barang.`kode_barang`
+WHERE
+month(tgl_retur)=$P{bln} and year(tgl_retur)=$P{thn}]]>
+	</queryString>
+	<field name="detail_retur_no_retur" class="java.lang.String"/>
+	<field name="detail_retur_kode_barang" class="java.lang.String"/>
+	<field name="detail_retur_qty_retur" class="java.lang.Integer"/>
+	<field name="detail_retur_sub_retur" class="java.lang.Integer"/>
+	<field name="barang_kode_barang" class="java.lang.String"/>
+	<field name="barang_nama_barang" class="java.lang.String"/>
+	<field name="barang_harga" class="java.lang.Integer"/>
+	<field name="barang_stok" class="java.lang.Integer"/>
+	<field name="retur_jual_no_retur" class="java.lang.String"/>
+	<field name="retur_jual_tgl_retur" class="java.sql.Date"/>
+	<field name="retur_jual_total_retur" class="java.lang.Integer"/>
+	<field name="retur_jual_id_customer" class="java.lang.String"/>
+	<field name="bulan" class="java.lang.String"/>
+	<variable name="detail_retur_qty_retur_1" class="java.lang.Integer" resetType="Group" resetGroup="retur_jual_no_retur" calculation="Sum">
+		<variableExpression><![CDATA[$F{detail_retur_qty_retur}]]></variableExpression>
+	</variable>
+	<variable name="detail_retur_sub_retur_1" class="java.lang.Integer" resetType="Group" resetGroup="retur_jual_no_retur" calculation="Sum">
+		<variableExpression><![CDATA[$F{detail_retur_sub_retur}]]></variableExpression>
+	</variable>
+	<group name="retur_jual_no_retur">
+		<groupExpression><![CDATA[$F{retur_jual_no_retur}]]></groupExpression>
+		<groupHeader>
+			<band height="175">
+				<frame>
+					<reportElement mode="Opaque" x="0" y="3" width="721" height="24" forecolor="#B89F7D" backcolor="#000000" uuid="3828114e-99cc-4b41-9de7-79fb820eb2ab"/>
+				</frame>
+				<rectangle>
+					<reportElement x="725" y="3" width="77" height="24" backcolor="#666666" uuid="942d54ac-f4e5-4334-a301-3a77b2693684"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement x="112" y="27" width="140" height="20" uuid="872faaf8-a44a-427d-bb75-62d3f6571f81"/>
+					<textFieldExpression><![CDATA[$F{retur_jual_no_retur}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="112" y="63" width="140" height="20" uuid="8fbfcd06-c5b4-492e-9454-981eee7d7bcf"/>
+					<textFieldExpression><![CDATA[$F{retur_jual_tgl_retur}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="112" y="98" width="140" height="20" uuid="11860650-5a94-4a22-b112-e8f339581b4f"/>
+					<textFieldExpression><![CDATA[$F{retur_jual_id_customer}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="2" y="27" width="100" height="20" uuid="c71414e0-4a6d-4dd2-8611-e99a552221a0"/>
+					<text><![CDATA[No Retur]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="63" width="100" height="20" uuid="8e855057-2529-4326-9533-45e9bd3f36b2"/>
+					<text><![CDATA[Tanggal Retur]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="98" width="100" height="20" uuid="a4079e62-66fe-45c1-802c-e2aa0e586246"/>
+					<text><![CDATA[Customer]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="2" y="155" width="100" height="20" uuid="f4f9fdb1-e3b2-400d-9361-58da02a1bd13"/>
+					<text><![CDATA[Kode Barang]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="152" y="155" width="100" height="20" uuid="e16b5059-2377-4b3c-ae3c-2644ef5a47bf"/>
+					<text><![CDATA[Nama Barang]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="290" y="155" width="100" height="20" uuid="940417e6-853a-463b-ba4b-f436f389d0a0"/>
+					<text><![CDATA[Qty]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="424" y="155" width="100" height="20" uuid="0a6a1241-8742-472b-bea1-c408b389aa0c"/>
+					<text><![CDATA[Subtotal]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="73">
+				<textField>
+					<reportElement x="290" y="0" width="134" height="20" uuid="f4e048c9-f8ef-4c9f-b049-9cc003cad8eb"/>
+					<textFieldExpression><![CDATA[$V{detail_retur_qty_retur_1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="424" y="26" width="146" height="20" uuid="67153a4c-8863-4d2b-bd5d-5a7db8e76a73"/>
+					<textFieldExpression><![CDATA[$V{detail_retur_sub_retur_1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="152" y="0" width="100" height="20" uuid="04542b69-6a48-40a3-8588-3b2e01fb50d1"/>
+					<text><![CDATA[Total Item]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="152" y="26" width="100" height="20" uuid="015a9ff0-f763-46d7-a0c4-694bed3f0a45"/>
+					<text><![CDATA[Grand Total]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="102" splitType="Stretch">
+			<image>
+				<reportElement x="725" y="0" width="77" height="102" uuid="77fea149-a6b6-4523-b73a-2201b77ee8f6"/>
+				<imageExpression><![CDATA["cherry.jpg"]]></imageExpression>
+			</image>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="721" height="66" backcolor="#000000" uuid="b37bad3c-9d24-4b91-9a96-70d8e1b7bf92"/>
+				<staticText>
+					<reportElement style="Title" x="0" y="0" width="570" height="66" uuid="3042a787-be2d-4018-8e4d-958535ac73cc"/>
+					<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+					<textElement verticalAlignment="Bottom">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[Laporan Retur Penjualan]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="70" width="721" height="32" forecolor="#000000" backcolor="#CC0000" uuid="66a234e4-a28c-4801-9099-ed0597133795"/>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="553" y="12" width="144" height="20" forecolor="#FFFFFF" uuid="88db489d-5ed8-4e53-94c5-bf77de1ba567"/>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="112" y="3" width="100" height="20" uuid="02cd14fa-d4fa-4506-979f-625404765f0e"/>
+				<textFieldExpression><![CDATA[$F{bulan}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="3" width="100" height="20" uuid="f87c9f0e-1c1f-4fd1-b778-40e44baa4658"/>
+				<text><![CDATA[Bulan]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="336" y="3" width="100" height="20" uuid="3b815831-508d-4380-8c1d-2e30dc95498c"/>
+				<textFieldExpression><![CDATA[$P{thn}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="224" y="3" width="100" height="20" uuid="557de196-11b8-4d1d-8cea-6d58472ab6f2"/>
+				<text><![CDATA[Tahun]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="797" height="18" uuid="7ec73ec3-ee09-486c-a8be-f7a728e8a820"/>
+			</frame>
+			<textField>
+				<reportElement x="2" y="0" width="140" height="20" uuid="8c77b80f-c8b6-41a2-b89e-ec4ab97a9d7c"/>
+				<textFieldExpression><![CDATA[$F{detail_retur_kode_barang}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="152" y="0" width="127" height="20" uuid="47e54763-33bb-4429-b8cf-53215e43dcc7"/>
+				<textFieldExpression><![CDATA[$F{barang_nama_barang}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="0" width="122" height="20" uuid="6e361d7b-f7ba-447a-9f63-896f8be2ff3c"/>
+				<textFieldExpression><![CDATA[$F{detail_retur_qty_retur}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="424" y="0" width="129" height="20" uuid="69b6f1d3-241c-4026-9c4e-4cda947305e6"/>
+				<textFieldExpression><![CDATA[$F{detail_retur_sub_retur}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="25" forecolor="#D0B48E" backcolor="#000000" uuid="5e721df8-6d30-4b32-9332-043b9b5d1cac"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="757" y="3" width="40" height="20" forecolor="#FFFFFF" uuid="d346e212-be45-4278-af84-cd5a2a8a8ead"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="677" y="3" width="80" height="20" forecolor="#FFFFFF" uuid="c3c3654f-07bc-4138-9c93-d5b1f2711293"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
